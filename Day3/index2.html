@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3</title>
+</head>
+
+<body>
+    <div class="outer-box">
+        <div class="inner-box">
+            <div class="image-box">
+                <img src="https://m.media-amazon.com/images/I/81TOOL0m-1L._SY741_.jpg" alt="batman-2">
+            </div>
+            <div class="text-area">
+                <h3>
+                    Batman 2012
+                </h3>
+                <p>
+                    Released On Jun 18
+                </p>
+                <button class="button-5" role="button">Book Tickets</button>
+            </div>
+        </div>
+        <div class="inner-box">
+            <div class="image-box">
+                <img src="https://m.media-amazon.com/images/I/51NntSb5JZL._SX300_SY300_QL70_FMwebp_.jpg" alt="batman-2">
+            </div>
+            <div class="text-area">
+                <h3>
+                    Iron-Man 2
+                </h3>
+                <p>
+                    Released On 18 June
+                </p>
+               <button class="button-5" role="button">Book Tickets</button>
+            </div>
+        </div>
+
+        <div class="inner-box">
+            <div class="image-box">
+                <img src="https://m.media-amazon.com/images/I/915mchBV+aL._SY741_.jpg" alt="batman-2">
+            </div>
+            <div class="text-area">
+                <h3>
+                    Avengers
+                </h3>
+                <p>
+                    Released On June 18
+                </p>
+                <button class="button-5" role="button">Book Tickets</button>
+            </div>
+        </div>
+
+        <div class="inner-box">
+            <div class="image-box">
+                <img src="https://m.media-amazon.com/images/I/716o+t+76SL._SY741_.jpg" alt="batman-2">
+            </div>
+            <div class="text-area">
+                <h3>
+                    Avengers
+                </h3>
+                <p>
+                    Released On June 18
+                </p>
+                <button class="button-5" role="button">Book Tickets</button>
+            </div>
+        </div>
+
+        <div class="inner-box">
+            <div class="image-box">
+                <img src="https://m.media-amazon.com/images/I/91-6jMdPAbL._AC_UF480,480_SR480,480_.jpg" alt="batman-2">
+            </div>
+            <div class="text-area">
+                <h3>
+                    Spider-Man
+                </h3>
+                <p>
+                    Released On June 18
+                </p>
+                <button class="button-5" role="button">Book Tickets</button>
+            </div>
+        </div>
+
+        <div class="inner-box">
+            <div class="image-box">
+                <img src="https://m.media-amazon.com/images/I/91obnwEhJQL._SY741_.jpg" alt="batman-2">
+            </div>
+            <div class="text-area">
+                <h3>
+                    Gimmer Man
+                </h3>
+                <p>
+                    Released On June 18
+                </p>
+                <button class="button-5" role="button">Book Tickets</button>
+            </div>
+        </div>
+
+    </div>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+            background-color: whitesmoke;
+        }
+
+        
+
+        /* CSS */
+        .button-5 {
+            align-items: center;
+            background-clip: padding-box;
+            background-color: #fa6400;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+            box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            justify-content: center;
+            line-height: 1.25;
+            margin: 20px 0;
+            min-height: 3rem;
+            padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+            position: relative;
+            text-decoration: none;
+            transition: all 250ms;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: baseline;
+            width: auto;
+        }
+
+        .button-5:hover,
+        .button-5:focus {
+            background-color: #fb8332;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        }
+
+        .button-5:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-5:active {
+            background-color: #c85000;
+            box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+            transform: translateY(0);
+        }
+
+        .inner-box {
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        @media only screen and (max-width : 800px) and (min-width : 500px) {
+
+
+
+            .outer-box {
+                display: flex;
+                justify-content: space-between;
+                width: 450px;
+                flex-wrap: wrap;
+            }
+
+            img {
+                border-radius: 100%;
+                height: 150px;
+                width: 150px;
+                object-fit: cover;
+            }
+
+            .inner-box {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 10px;
+                margin-bottom: 15px;
+                /* border: 1px solid black; */
+            }
+
+            .image-box {
+                display: flex;
+                justify-content: center;
+            }
+
+            .text-area {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .text-area>h3 {
+                margin-bottom: -5px;
+            }
+        }
+
+        @media only screen and (min-width : 801px) {
+            button {
+                margin-top: 60px;
+            }
+
+            .image-box {
+                width: 250px;
+                height: 250px;
+                overflow: hidden;
+            }
+
+            .image-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .inner-box {
+                display: flex;
+                flex-direction: row;
+                height: 250px;
+                width: 313px;
+                justify-content: space-between;
+                margin-bottom: 20px;
+
+            }
+
+            .text-area {
+                padding: 0 15px;
+            }
+
+            .outer-box {
+                width: 800px;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                justify-content: space-between;
+
+            }
+
+
+        }
+
+        @media only screen and (max-width : 499px) {
+            .outer-box {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                margin: 10px 0;
+                width: 200px;
+
+            }
+
+            img {
+                border-radius: 100%;
+                height: 150px;
+                width: 150px;
+                object-fit: cover;
+            }
+
+            .inner-box {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 10px;
+                margin: 10px 0;
+            }
+
+            .image-box {
+                display: flex;
+                justify-content: center;
+            }
+
+            .text-area {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .text-area>h3 {
+                margin-bottom: -5px;
+            }
+        }
+    </style>
+</body>
+
+</html>
