@@ -1,61 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-      <form id="signUpform">
+    <form id="signUpform">
         <label for="username">Username</label><br>
         <input type="text" name="username" id="username"><br><br>
         <label for="password">Password</label><br>
         <input type="text" name="password" id="password"><br><br>
+        <label for="imageUrl">imageUrl</label><br>
+        <input type="text" name="imageUrl" id="imageUrl"><br><br>
         <input type="submit" value="Signup" id="submitButton">
+
     </form>
-
+    <h1>Current Scenario </h1><p> You can't add multiple people of same username</p>
+    <p>i will update it later in the code : <a href="https://github.com/deepesh-sr/bsh-assignments/tree/main/Day4">Check Github</a></p>
     <script>
-    let submitButton = document.getElementById('submitButton');
-    let isSignUp = true; // Flag to toggle between Signup and Login
+        let submitButton = document.getElementById('submitButton');
+        let isSignUp = true; // Flag to toggle between Signup and Login
 
-    document.getElementById('signUpform').addEventListener('submit', (e) => {
-        e.preventDefault();
+        document.getElementById('signUpform').addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const imageUrl = document.getElementById('imageUrl').value;
 
-        const user_credentials = {
-            username: username,
-            password: password
-        };
+            const user_credentials = {
+                username: username,
+                password: password,
+                imageUrl: imageUrl
+            };
 
-        const result = localStorage.getItem(username);
-        const parsedResult = JSON.parse(result);
+            const result = localStorage.getItem(username);
+            const parsedResult = JSON.parse(result);
 
-        if (isSignUp) {
-            // Signup logic
-            if (parsedResult && parsedResult.username === username) {
-                console.log("User already exists, please Login");
-                submitButton.value = "Login";
-                isSignUp = false; // Switch to Login mode
+            if (isSignUp) {
+                // Signup logic
+                if (parsedResult && parsedResult.username === username) {
+                    console.log("User already exists, please Login");
+                    submitButton.value = "Login";
+                    isSignUp = false; // Switch to Login mode
+                } else {
+                    console.log("Data Added");
+                    localStorage.setItem(username, JSON.stringify(user_credentials));
+                    alert("Signup successful! Please log in.");
+                    submitButton.value = "Login";
+                    isSignUp = false; // Switch to Login mode
+                }
             } else {
-                console.log("Data Added");
-                localStorage.setItem(username, JSON.stringify(user_credentials));
-                alert("Signup successful! Please log in.");
-                submitButton.value = "Login";
-                isSignUp = false; // Switch to Login mode
+                // Login logic
+                if (parsedResult && parsedResult.password === password) {
+                    let h1 = document.createElement('h1');
+                    h1.textContent = "Welcome , " + username;
+                    const img = document.createElement('img')
+                    img.src = imageUrl;
+                    img.alt = "User Image"
+                    
+                    document.body.appendChild(h1)
+                    console.log("Login successful");
+                    document.body.appendChild(img)
+                    // alert("Welcome, " + username + "!");
+                    
+                } else {
+                    console.log("Invalid credentials");
+                    alert("Invalid username or password. Please try again.");
+                }
             }
-        } else {
-            // Login logic
-            if (parsedResult && parsedResult.password === password) {
-                console.log("Login successful");
-                alert("Welcome, " + username + "!");
-            } else {
-                console.log("Invalid credentials");
-                alert("Invalid username or password. Please try again.");
-            }
-        }
-    });
-</script>
+        });
+    </script>
 </body>
+
 </html>
