@@ -7,44 +7,55 @@
 </head>
 <body>
       <form id="signUpform">
-        <label for="username"></label><br>
+        <label for="username">Username</label><br>
         <input type="text" name="username" id="username"><br><br>
-        <label for="password"></label><br>
+        <label for="password">Password</label><br>
         <input type="text" name="password" id="password"><br><br>
-        <input type="submit" id="submitButton">
+        <input type="submit" value="Signup" id="submitButton">
     </form>
 
     <script>
-        
-        let signUp = false ; 
-        
-        let submitButton = document.getElementById('submitButton');
+    let submitButton = document.getElementById('submitButton');
+    let isSignUp = true; // Flag to toggle between Signup and Login
 
-        submitButton.addEventListener('click',()=>{
-            signUp = !signUp
-            
-            if(signUp){
-                submitButton.value = "Login"
-            }else{
-                submitButton.value= "Signup"
+    document.getElementById('signUpform').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const user_credentials = {
+            username: username,
+            password: password
+        };
+
+        const result = localStorage.getItem(username);
+        const parsedResult = JSON.parse(result);
+
+        if (isSignUp) {
+            // Signup logic
+            if (parsedResult && parsedResult.username === username) {
+                console.log("User already exists, please Login");
+                submitButton.value = "Login";
+                isSignUp = false; // Switch to Login mode
+            } else {
+                console.log("Data Added");
+                localStorage.setItem(username, JSON.stringify(user_credentials));
+                alert("Signup successful! Please log in.");
+                submitButton.value = "Login";
+                isSignUp = false; // Switch to Login mode
             }
-        })
-       
-        document.getElementById('signUpform').addEventListener('submit',(e)=>{
-            e.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            console.log(username,password);
-            
-            const user_credentials = {
-                username : username,
-                password : password
+        } else {
+            // Login logic
+            if (parsedResult && parsedResult.password === password) {
+                console.log("Login successful");
+                alert("Welcome, " + username + "!");
+            } else {
+                console.log("Invalid credentials");
+                alert("Invalid username or password. Please try again.");
             }
-
-            localStorage.setItem("user1",JSON.stringify(user_credentials));
-        })
-    </script>
+        }
+    });
+</script>
 </body>
 </html>
