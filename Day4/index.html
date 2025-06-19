@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <form id="signUpform">
+        <label for="username"></label><br>
+        <input type="text" name="username" id="username"><br><br>
+        <label for="password"></label><br>
+        <input type="text" name="password" id="password"><br><br>
+        <input type="submit" id="submitButton">
+    </form>
+
+    <script>
+        
+        let signUp = false ; 
+        
+        let submitButton = document.getElementById('submitButton');
+
+        submitButton.addEventListener('click',()=>{
+            signUp = !signUp
+            
+            if(signUp){
+                submitButton.value = "Login"
+            }else{
+                submitButton.value= "Signup"
+            }
+        })
+       
+        document.getElementById('signUpform').addEventListener('submit',(e)=>{
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            console.log(username,password);
+            
+            const user_credentials = {
+                username : username,
+                password : password
+            }
+
+            localStorage.setItem("user1",JSON.stringify(user_credentials));
+        })
+    </script>
+</body>
+</html>
