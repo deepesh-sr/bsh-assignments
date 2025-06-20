@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo Web App</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 10px;
+    }
+    .delete-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+     body{
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Todo Web App</h1>
+  <p>Enter your details below</p>
+
+  <form id="form-element" style="border: 1px solid black; padding: 10px; margin-bottom: 20px; border-radius: 10px;">
+    <label for="title">Title</label><br><br>
+    <input type="text" name="title" id="title"><br><br>
+    <label for="description">Description</label><br><br>
+    <input type="text" name="description" id="description"><br><br>
+    <label for="deadline">Set Deadline</label><br><br>
+    <input type="datetime-local" name="deadline" id="deadline"><br><br><br>
+    <input type="submit"><br><br><br>
+  </form>
+
+  <div class="display-todo">
+    <table id="table">
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Time Left</th>
+        <th>Action</th>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    let formElement = document.getElementById('form-element');
+    let table = document.getElementById('table');
+
+    // Load todos from localStorage and display them
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    renderTodos();
+
+    formElement.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      let title = document.getElementById('title').value;
+      let description = document.getElementById('description').value;
+      let deadline = document.getElementById('deadline').value;
+
+      let todo = {
+        id: Date.now(), // unique id for each todo
+        title,
+        description,
+        deadline
+      };
+
+      todos.push(todo);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      renderTodos(); // re-render table
+      formElement.reset();
+    });
+
+    function renderTodos() {
+      // Clear existing rows (except header)
+      table.innerHTML = `
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Deadline</th>
+          <th>Time Left</th>
+          <th>Action</th>
+        </tr>
+      `;
+
+      todos.forEach(todo => {
+        let row = document.createElement('tr');
+
+        let td1 = document.createElement('td');
+        td1.textContent = todo.title;
+
+        let td2 = document.createElement('td');
+        td2.textContent = todo.description;
+
+        let td3 = document.createElement('td');
+        td3.textContent = todo.deadline;
+
+        let td4 = document.createElement('td');
+        td4.textContent = calculateTimeLeft(todo.deadline);
+
+        let td5 = document.createElement('td');
+        let deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.onclick = () => deleteTodo(todo.id);
+        td5.appendChild(deleteBtn);
+
+        row.appendChild(td1);
+        row.appendChild(td2);
+        row.appendChild(td3);
+        row.appendChild(td4);
+        row.appendChild(td5);
+
+        table.appendChild(row);
+      });
+    }
+
+    function deleteTodo(id) {
+      todos = todos.filter(todo => todo.id !== id);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      renderTodos();
+    }
+
+    function calculateTimeLeft(deadline) {
+      const now = new Date();
+      const end = new Date(deadline);
+      const diff = end - now;
+
+      if (diff <= 0) return 'Expired';
+
+      const mins = Math.floor((diff / 1000 / 60) % 60);
+      const hrs = Math.floor((diff / 1000 / 60 / 60) % 24);
+      const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+
+      return `${days}d ${hrs}h ${mins}m left`;
+    }
+  </script>
+</body>
+</html>
