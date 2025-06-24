@@ -31,14 +31,211 @@
             font-size: 14px;
             color: #666;
         }
+
+        body {
+            font-family: Arial;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
+
+        form {
+            border: 1px solid black;
+            padding: 20px;
+            width: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+
+        }
+
+        input {
+            width: 100%;
+            padding: 7px;
+            margin: 8px 0;
+        }
+
+        #loginSection,
+        #signupSection {
+            display: none;
+        }
+
+        #userProfile {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #userProfile img {
+            width: 80px;
+            border-radius: 50%;
+        }
+
+        .button-class {
+            height: 30px;
+            width: 50px;
+            padding: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .button-class:hover {
+            background-color: #e0e0e0;
+            /* Change background color on hover */
+        }
+        .button-box {
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 </head>
 
 <body>
+    <div class="button-box"> 
+    <button class="button-class" id="signup">Signup</button>
+    <button class="button-class" id="login">Login</button>
+    </div>
+    <h2 id="pageTitle">signup</h2>
+    <nav>
+        <div id="userProfile"></div>
+    </nav>
+
+    <!-- signup form -->
+    <div id="signupSection">
+        <form id="signupForm">
+            <input type="text" id="signupUsername" placeholder="enter your name">
+            <input type="email" id="signupEmail" placeholder="enter your mail">
+            <input type="password" id="signupPassword" placeholder="enter password">
+            <input type="text" id="signupProfile" placeholder="enter you profile url">
+            <input type="submit" value="Signup">
+
+        </form>
+    </div>
+
+
+
+    <div id="loginSection">
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="enter your mail for login">
+            <input type="password" id="loginPassword" placeholder="enter password for login">
+            <input type="submit" value="Login">
+        </form>
+    </div>
     <div id="container">
 
-    </div>
-    <script src="index.js"></script>
+
+
 </body>
 
 </html>
+<script>
+    //show signup form on load
+    let signupbutton = document.getElementById('signup');
+    let loginbutton = document.getElementById('login');
+
+    loginbutton.addEventListener('click', () => {
+        document.getElementById("loginSection").style.display = "block";
+        document.getElementById("signupSection").style.display = "none"; // Hide signup section
+        document.getElementById("pageTitle").textContent = "Login"; // Update page title
+    })
+
+    signupbutton.addEventListener('click', () => {
+        document.getElementById("signupSection").style.display = "block"
+
+        document.getElementById("loginSection").style.display = "none";
+    })
+
+
+    document.getElementById("signupSection").style.display = "block"
+    document.getElementById("signupForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var username = document.getElementById("signupUsername").value;
+        var email = document.getElementById("signupEmail").value;
+        var password = document.getElementById("signupPassword").value;
+        var profileURL = document.getElementById("signupProfile").value;
+
+
+        var users = JSON.parse(localStorage.getItem("users1")) || [];
+        var emailExists = users.some(user => user.email === email);
+        if (emailExists) {
+            alert("user with this email already exist,pls login");
+
+            document.getElementById("signupSection").style.display = "none";
+            document.getElementById("loginSection").style.display = "block";
+            document.getElementById("pageTitle").textContent = "Login";
+
+        } else {
+            users.push({ username, email, password, profileURL });
+            localStorage.setItem("users1", JSON.stringify(users))
+
+            alert("signup successfuly !! redirecting to login");
+
+            document.getElementById("signupSection").style.display = "none";
+            document.getElementById("loginSection").style.display = "block";
+            document.getElementById("pageTitle").textContent = "Login";
+        }
+    })
+    //login
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var email = document.getElementById("loginEmail").value;
+        var password = document.getElementById("loginPassword").value;
+
+        var users = JSON.parse(localStorage.getItem("users1")) || [];
+        var user = users.find(user => user.email === email && user.password === password);
+        if (user) {
+            alert("login successfull");
+            var profileDiv = document.getElementById("userProfile");
+            document.getElementById("pageTitle").textContent = "Profile";
+            profileDiv.innerHTML =
+
+                ` 
+                  <img src="${user.profileURL}" alt="profile image">
+                 <h3>${user.username}</h3>
+                 `;
+            document.getElementById("loginSection").style.display = "none";
+            loginbutton.style.display = "none"
+            signupbutton.style.display = "none"
+            async function fetchData() {
+                try {
+                    const data = await fetch('https://simple-grocery-store-api.glitch.me/products');
+                    const resultedData = await data.json();
+                    console.log(resultedData)
+                    createElement(resultedData);
+                } catch (error) {
+                    console.error('Error fetching the data', error);
+                }
+            }
+
+            function createElement(items) {
+                let outerbox = document.getElementById('container')
+                items.forEach(item => {
+                    let container = document.createElement('div')
+                    container.className = "item-container";
+                    let category = document.createElement('h2');
+                    category.innerText = item.category;
+                    let name = document.createElement('p');
+                    name.innerText = item.name;
+                    console.log(name)
+                    let instock = document.createElement('p')
+                    instock.innerHTML = item.inStock ? "Instock" : "Sold Out";
+                    instock.style.color = item.inStock ? "green" : "red";
+                    console.log(instock)
+                    console.log(category);
+                    container.append(category, name, instock)
+                    outerbox.appendChild(container)
+
+                });
+            }
+            fetchData();
+
+        } else {
+            alert("invalid email or password")
+        }
+        document.getElementById("loginForm").reset();
+    });
+
+</script>
