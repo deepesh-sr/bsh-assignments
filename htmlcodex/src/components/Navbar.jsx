@@ -20,9 +20,12 @@ const Navbar = () => {
         <NavLink to={"/removecredit"} className={"hover:text-blue-400 transition-all duration-300"}>
           <p>Remove Credit</p>
         </NavLink>
-        <img src="src/assets/search-solid.svg" className='w-5 cursor-pointer' alt="search-icon" />
+        <NavLink to={"/contactus"} className={"hover:text-blue-400 transition-all duration-300"}>
+          <p>Contact Us</p>
+        </NavLink>
+        <img src="src/assets/search-solid.svg" className='w-4 cursor-pointer' alt="search-icon" />
 
-        <img src="src/assets/bars-solid.svg" alt="menu" className='w-5 cursor-pointer'/>
+        <img src="src/assets/bars-solid.svg" alt="menu" className='w-4 cursor-pointer'/>
       </ul>
       
 
